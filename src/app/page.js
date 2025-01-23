@@ -3,7 +3,7 @@ import PostCard from "@/components/PostCards";
 
 export default async function Home() {
   const response = await fetch("https://silent-pen-server.vercel.app/blogs", {
-    cache: "no-store", // Prevent caching for SSR-like behavior
+    cache: "no-store", 
   });
 
   const blogs = await response.json();
