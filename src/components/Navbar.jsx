@@ -1,6 +1,13 @@
 import Link from "next/link";
+import {RegisterLink, LoginLink, LogoutLink} from "@kinde-oss/kinde-auth-nextjs/components";
+import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 
-const Navbar = () => {
+
+const Navbar = async () => {
+    
+    const {isAuthenticated} = getKindeServerSession();
+    const isUserAuthenticated = await isAuthenticated();
+
     return (
         <section className="flex container mx-auto my-10 border-b-2 pb-6 border-zinc-900">
             {/* text */}
@@ -11,8 +18,20 @@ const Navbar = () => {
             <div className="space-x-3">
                 <Link className="px-3 py-2 rounded-md bg-zinc-900" href={'/'}>Blog</Link>
                 <Link className="px-3 py-2 rounded-md bg-zinc-900" href={'/profile'}>Profile</Link>
-                <Link className="px-3 py-2 rounded-md bg-zinc-900" href={'/auth/login'}>Login</Link>
-                <Link className="px-3 py-2 rounded-md bg-zinc-900" href={'/auth/register'}>Sign Up</Link>
+                {isUserAuthenticated ? (
+                        <LogoutLink className="px-3 py-2 rounded-md bg-zinc-900">
+                            Logout
+                        </LogoutLink>
+                    ) : (
+                        <>
+                            <LoginLink className="px-3 py-2 rounded-md bg-zinc-900">
+                                Sign in
+                            </LoginLink>
+                            <RegisterLink className="px-3 py-2 rounded-md bg-zinc-900">
+                                Sign up
+                            </RegisterLink>
+                        </>
+                    )}
             </div>
             </div>
         </section>
